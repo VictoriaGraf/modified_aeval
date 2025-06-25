@@ -235,11 +235,15 @@ def _get_featurized_data(
     df = df[["preference", "index"]].copy()
     df["std_delta_len"] = std_delta_len / std_delta_len.std()
     df["preference"] = df["preference"].astype(float).replace({0.0: 1.5}) - 1  # easier to work with in [0,1]
-    df["instruction_difficulty"] = df["index"].transform(lambda g: instruction_difficulty[g])
+    if "instruction_difficulty" in formula:
+        df["instruction_difficulty"] = df["index"].transform(lambda g: instruction_difficulty[g])
     df["not_gamed_baseline"] = True
 
     # 3. make the design matrix for the model you would like to predict for, i.e., if there was no length difference
-    df_test = df[["instruction_difficulty", "not_gamed_baseline"]].copy()
+    if "instruction_difficulty" in formula:
+        df_test = df[["instruction_difficulty", "not_gamed_baseline"]].copy()
+    else:
+        df_test = df[["not_gamed_baseline"]].copy()
     df_test["std_delta_len"] = 0
 
     if regularize_to_baseline_lambda:
