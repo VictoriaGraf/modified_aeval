@@ -243,7 +243,7 @@ def _get_featurized_data(
     if "instruction_difficulty" in formula:
         df_test = df[["instruction_difficulty", "not_gamed_baseline"]].copy()
     else:
-        df_test = df[["not_gamed_baseline"]].copy()
+        df_test = df[["preference"]].copy() #to get the right dim
     df_test["std_delta_len"] = 0
 
     if regularize_to_baseline_lambda:
