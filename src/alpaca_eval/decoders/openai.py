@@ -259,7 +259,7 @@ def _openai_completion_helper(
             for choice in choices:
                 choice["total_tokens"] = completion_batch.usage.total_tokens / len(prompt_batch)
             break
-        except Exception as e:
+        except Exception as e:  # the openai error handling changes are here
             logging.warning(f"OpenAIError: {e}.")
             if "Please reduce" in str(e):
                 kwargs["max_tokens"] = int(kwargs["max_tokens"] * 0.8)
