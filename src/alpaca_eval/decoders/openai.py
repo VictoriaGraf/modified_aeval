@@ -267,7 +267,7 @@ def _openai_completion_helper(
                 if kwargs["max_tokens"] == 0:
                     logging.exception("Prompt is already longer than max context length. Error:")
                     raise e
-            elif "Please try again with a different prompt." in str(e) or "You can retry your request" in str(e):
+            elif "Please try again with a different prompt." in str(e) or "You can retry your request" in str(e) or "timed out" in str(e):
                 logging.warning(
                     f"We got an obscure error from openAI. It's likely the spam filter so we are "
                     f"skipping this example."
